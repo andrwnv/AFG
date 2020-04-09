@@ -1,7 +1,23 @@
-# AFG
-Anime Funny Game its date simulator with tamagotchi elements.
+# AFG [Anime Funny Game]
 
-How to start:
-    npm install -g expo-cli
-    yarn add expo (if need)
-    yarn start
+AFG is a home project that is being developed TypeScript + Reacr Native.
+
+### How to start
+
+AFG requires [Yarn](https://yarnpkg.com/) to run.
+
+For start developing...
+
+```sh
+$ yarn add expo
+$ yarn start
+```
+
+
+License
+----
+
+MIT
+
+
+**Free Software!**
