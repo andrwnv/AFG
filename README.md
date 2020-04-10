@@ -9,6 +9,8 @@ AFG requires [Yarn](https://yarnpkg.com/) to run.
 For start developing...
 
 ```sh
+$ npm install
+$ npm install -g expo-cli (if not installed)
 $ yarn add expo
 $ yarn start
 ```
