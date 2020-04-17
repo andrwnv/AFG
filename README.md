@@ -12,12 +12,3 @@ For start developing...
 $ yarn add expo
 $ yarn start
 ```
-
-
-License
-----
-
-MIT
-
-
-**Free Software!**
