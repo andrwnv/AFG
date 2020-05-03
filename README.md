@@ -4,11 +4,16 @@ AFG is a home project that is being developed TypeScript + Reacr Native.
 
 ### How to start
 
-AFG requires [Yarn](https://yarnpkg.com/) to run.
+AFG requires [Yarn](https://yarnpkg.com/) or [NPM](https://www.npmjs.com/) to run.
 
-For start developing...
+NPM:
+'''sh
+$ npm install
+$ npm start
+'''
 
+YARN:
 ```sh
-$ yarn add expo
+$ yarn install
 $ yarn start
 ```
