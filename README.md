@@ -4,22 +4,27 @@ AFG is a home project that is being developed TypeScript + Reacr Native.
 
 ### How to start
 
-AFG requires [Yarn](https://yarnpkg.com/) to run.
+AFG requires [Yarn](https://yarnpkg.com/) or [NPM](https://www.npmjs.com/) to run.
 
-For start developing...
-
+NPM:
 ```sh
 $ npm install
-$ npm install -g expo-cli (if not installed)
-$ yarn add expo
+$ npm start
+```
+
+YARN:
+```sh
+$ yarn install
 $ yarn start
 ```
 
+### Developers recommendations
+* Write brief for component ( *@brief: example brief* )
 
-License
-----
+* Files are always camel-cased (camelCasedRule.ts)
+* React Native getter are always pascal-case (GetComponent) - React Rule
 
-MIT
+* Identifiers are always kebab-cased ("camel-case-example": false)
 
-
-**Free Software!**
+* Test, test, and test again
+* Code is read much more often than it is written
