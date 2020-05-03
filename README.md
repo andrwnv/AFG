@@ -19,7 +19,7 @@ $ yarn start
 ```
 
 ### Developers recommendations
-* Write brief for component ( /*@brief: example brief*/ )
+* Write brief for component ( *@brief: example brief* )
 
 * Files are always camel-cased (camelCasedRule.ts)
 * React Native getter are always pascal-case (GetComponent) - React Rule
