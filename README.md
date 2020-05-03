@@ -7,10 +7,10 @@ AFG is a home project that is being developed TypeScript + Reacr Native.
 AFG requires [Yarn](https://yarnpkg.com/) or [NPM](https://www.npmjs.com/) to run.
 
 NPM:
-'''sh
+```sh
 $ npm install
 $ npm start
-'''
+```
 
 YARN:
 ```sh
