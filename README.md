@@ -12,7 +12,7 @@ $ npm install
 $ npm start
 ```
 
-YARN:
+YARN (preferred):
 ```sh
 $ yarn install
 $ yarn start
