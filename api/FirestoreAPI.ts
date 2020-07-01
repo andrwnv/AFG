@@ -12,6 +12,12 @@ type User = {
     hairColor: String,
     eysColor:  String,
     skinColor: String,
+
+    money:     Number,
+    clean:     Number,
+    fun:       Number,
+    eaten:     Number,
+    sleep:     Number
 };
 
 type UserData = {
@@ -32,9 +38,13 @@ export default class FirestoreAPI {
     private _defaultUserProps: User = {
         hairColor: 'black',
         eysColor:  'pink',
-        skinColor: 'white'
+        skinColor: 'white',
+        money:     0,
+        clean:     100,
+        fun  :     100,
+        eaten:     100,
+        sleep:     100
     };
-
 
     constructor() {
         if ( !firebase.apps.length ) {
@@ -71,7 +81,12 @@ export default class FirestoreAPI {
 
                         res.push({ id: decrypt(doc.id), userProps: { hairColor: docData.hairColor,
                                                                      eysColor:  docData.eysColor,
-                                                                     skinColor: docData.skinColor } });
+                                                                     skinColor: docData.skinColor,
+                                                                     money:     docData.money,
+                                                                     clean:     docData.clean,
+                                                                     fun  :     docData.fun,
+                                                                     eaten:     docData.eaten,
+                                                                     sleep:     docData.sleep }});
                 });
             })
             .catch((err: any) => {
@@ -89,7 +104,7 @@ export default class FirestoreAPI {
 
         this._setCollectionName(collectionName);
 
-        const userPropsRef = this._firestore.collection(this._collectionName).doc(encrypt(userName));
+        const userPropsRef: firebase.firestore.DocumentReference = this._firestore.collection(this._collectionName).doc(encrypt(userName));
 
         return await userPropsRef.get().then((snapshot: firebase.firestore.DocumentSnapshot) => {
             if (snapshot.exists) {
@@ -98,13 +113,14 @@ export default class FirestoreAPI {
                 if (snapData === undefined)
                     return undefined;
 
-                console.log({ hairColor: snapData.hairColor,
-                         eysColor:  snapData.eysColor,
-                         skinColor: snapData.skinColor });
-
                 return { hairColor: snapData.hairColor,
                          eysColor:  snapData.eysColor,
-                         skinColor: snapData.skinColor }
+                         skinColor: snapData.skinColor,
+                         money:     snapData.money,
+                         clean:     snapData.clean,
+                         fun  :     snapData.fun,
+                         eaten:     snapData.eaten,
+                         sleep:     snapData.sleep }
             } else {
                 console.warn('[fireStoreAPT] -> Warn: Document no exists');
                 return undefined;
@@ -136,14 +152,14 @@ export default class FirestoreAPI {
 
         this._setCollectionName(collectionName);
 
-        const _isUserExist = await this.isUserExist(userName);
+        const _isUserExist: boolean | undefined = await this.isUserExist(userName);
 
         if (_isUserExist === undefined)
             return undefined;
         else if (!_isUserExist)
             return false;
 
-        const userPropsRef = this._firestore.collection(this._collectionName).doc(encrypt(userName));
+        const userPropsRef: firebase.firestore.DocumentReference = this._firestore.collection(this._collectionName).doc(encrypt(userName));
 
         for (let [key, value] of Object.entries(newProps)) {
             userPropsRef.set( { [key]: value }, {merge: true} );
@@ -159,16 +175,16 @@ export default class FirestoreAPI {
 
         this._setCollectionName(collectionName);
 
-        const userPropsRef = this._firestore.collection(this._collectionName).doc(encrypt(userName));
+        const userPropsRef: firebase.firestore.DocumentReference = this._firestore.collection(this._collectionName).doc(encrypt(userName));
 
-        let _isUserExist = await this.isUserExist(decrypt(userName));
+        let _isUserExist: boolean | undefined = await this.isUserExist(decrypt(userName));
 
         if (_isUserExist === undefined)
             return undefined;
         else if (_isUserExist)
             return false;
 
-        return await userPropsRef.get().then((snapshot) => {
+        return await userPropsRef.get().then(() => {
                 for (let [key, value] of Object.entries(this._defaultUserProps)) {
                     userPropsRef.set( { [key]: value }, {merge: true} );
                 }
