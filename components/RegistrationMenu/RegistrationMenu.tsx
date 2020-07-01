@@ -6,6 +6,7 @@ import { TextInputMask } from 'react-native-masked-text';
 import { clickAudioEffect } from '../../endpoints/AudioEffects';
 
 import AmazonCognitoAPI from '../../api/AmazonCognitoAPI';
+import FirestoreAPI     from '../../api/FirestoreAPI';
 
 import { styles } from './styles';
 
@@ -15,6 +16,7 @@ import { styles } from './styles';
 *
 */
 
+import {setNumber} from '../tmp';
 
 export default class RegistrationMenu extends Component {
     state = {
@@ -34,9 +36,11 @@ export default class RegistrationMenu extends Component {
         super(props);
 
         this._authController = new AmazonCognitoAPI();
+        this._dataBaseController = new FirestoreAPI();
     }
 
     _authController: AmazonCognitoAPI;
+    _dataBaseController: FirestoreAPI;
 
     onClickHandler = (viewId: String) => {
         alert('Button pressed ' + viewId);
@@ -173,8 +177,16 @@ export default class RegistrationMenu extends Component {
                                                   this.openWarningModal('Ошибка соединения или \n неправильно введен \n код подтверждения!');
                                                   return;
                                               }
+                                              this._dataBaseController.createUser(this.state.phone_number).then(
 
-                                              Actions.CreateCharacter();
+                                                  () => {
+                                                      Actions.CreateCharacter()
+                                                  }
+                                              ).catch(() => {
+                                                  this.openWarningModal('Ошибка соединения или \n неправильно введен \n код подтверждения!');
+                                                  return;
+                                              });
+                                              setNumber(this.state.phone_number);
                                           }).catch(() => this.openWarningModal('Ошибка соединения или \n неправильно введен \n код подтверждения!'));
                                       }}>
                         <Text style = {styles.buttonsText}>Подтвердить</Text>

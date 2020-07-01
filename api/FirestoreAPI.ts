@@ -1,4 +1,5 @@
 import * as firebase from 'firebase';
+import 'firebase/firestore';
 
 import { firebaseConfig, encrypt, decrypt } from './AFG_API_KEYS/ApiKeys';
 
@@ -12,6 +13,8 @@ type User = {
     hairColor: String,
     eysColor:  String,
     skinColor: String,
+
+    spriteName: String
 
     money:     Number,
     clean:     Number,
@@ -43,16 +46,17 @@ export default class FirestoreAPI {
         clean:     100,
         fun  :     100,
         eaten:     100,
-        sleep:     100
+        sleep:     100,
+        spriteName: 'titanda'
     };
 
     constructor() {
-        if ( !firebase.apps.length ) {
+        if ( firebase.apps.length === 0) {
             firebase.initializeApp(firebaseConfig);
-            this.state.isConnected = true;
-
-            this._firestore = firebase.firestore();
         }
+
+        this._firestore = firebase.firestore();
+        this.state.isConnected = true;
     }
 
     public isConnected = (): boolean => { return this.state.isConnected; }
@@ -79,14 +83,16 @@ export default class FirestoreAPI {
                     snapshot.forEach((doc: any) => {
                         const docData = doc.data();  // Save data.
 
-                        res.push({ id: decrypt(doc.id), userProps: { hairColor: docData.hairColor,
-                                                                     eysColor:  docData.eysColor,
-                                                                     skinColor: docData.skinColor,
-                                                                     money:     docData.money,
-                                                                     clean:     docData.clean,
-                                                                     fun  :     docData.fun,
-                                                                     eaten:     docData.eaten,
-                                                                     sleep:     docData.sleep }});
+                        res.push({ id: decrypt(doc.id), userProps: { hairColor:  docData.hairColor,
+                                                                     eysColor:   docData.eysColor,
+                                                                     skinColor:  docData.skinColor,
+                                                                     money:      docData.money,
+                                                                     clean:      docData.clean,
+                                                                     fun  :      docData.fun,
+                                                                     eaten:      docData.eaten,
+                                                                     sleep:      docData.sleep,
+                                                                     spriteName: docData.spriteName
+                        }});
                 });
             })
             .catch((err: any) => {
@@ -113,14 +119,15 @@ export default class FirestoreAPI {
                 if (snapData === undefined)
                     return undefined;
 
-                return { hairColor: snapData.hairColor,
-                         eysColor:  snapData.eysColor,
-                         skinColor: snapData.skinColor,
-                         money:     snapData.money,
-                         clean:     snapData.clean,
-                         fun  :     snapData.fun,
-                         eaten:     snapData.eaten,
-                         sleep:     snapData.sleep }
+                return { hairColor:  snapData.hairColor,
+                         eysColor:   snapData.eysColor,
+                         skinColor:  snapData.skinColor,
+                         money:      snapData.money,
+                         clean:      snapData.clean,
+                         fun  :      snapData.fun,
+                         eaten:      snapData.eaten,
+                         sleep:      snapData.sleep,
+                         spriteName: snapData.spriteName}
             } else {
                 console.warn('[fireStoreAPT] -> Warn: Document no exists');
                 return undefined;
@@ -174,7 +181,6 @@ export default class FirestoreAPI {
         }
 
         this._setCollectionName(collectionName);
-
         const userPropsRef: firebase.firestore.DocumentReference = this._firestore.collection(this._collectionName).doc(encrypt(userName));
 
         let _isUserExist: boolean | undefined = await this.isUserExist(decrypt(userName));

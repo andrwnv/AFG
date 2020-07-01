@@ -14,6 +14,8 @@ export default class App extends Component {
     constructor(props: any) {
         super(props);
 
+        console.ignoredYellowBox = ['Setting a timer'];
+
         if (Dimensions.get('screen').height - Dimensions.get('window').height < 26) {
             StatusBar.setHidden(true);
         }

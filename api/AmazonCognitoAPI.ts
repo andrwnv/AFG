@@ -18,12 +18,10 @@ export default class AmazonCognitoAPI {
             .then(() => {
                 console.log('[AmazonCognitoAPI]: SignIn successful!');
                 return true;
-                // Actions.CharacterMenu()
             })
             .catch(error => {
                 console.log('[AmazonCognitoAPI]: SignIn error!', error);
                 return false;
-                // this.openWarningModal('Не правильно введен \n номер телефона или пароль!');
             });
     }
 

@@ -3,10 +3,13 @@ import { TextInput, Text, View, TouchableOpacity, KeyboardAvoidingView, Image, D
 import { Actions } from 'react-native-router-flux';
 
 import { clickAudioEffect } from '../../endpoints/AudioEffects';
+import FirestoreAPI         from '../../api/FirestoreAPI';
 
 import { styles } from './styles';
 
 import Pictures from '../../assets/hero_sprites/Pictures';
+
+import {getNumber} from '../tmp';
 
 /*
 *
@@ -21,7 +24,11 @@ const { width, height } = Dimensions.get('screen');
 export default class HeroConstucter extends Component {
     constructor(props: any) {
         super(props);
+
+        this._dataBaseController = new FirestoreAPI();
     }
+
+    _dataBaseController: FirestoreAPI;
 
     state = {
         skinColor: 'white',
@@ -143,7 +150,17 @@ export default class HeroConstucter extends Component {
                     </View>
                 </View>
                 <View style={{position: 'absolute', top: width * 1.5, width: '100%', height: '100%'}}> 
-                        <TouchableOpacity  onPress={() => { Actions.GameComponent(); clickAudioEffect(); }}
+                        <TouchableOpacity  onPress={() => {
+                            this._dataBaseController.setUserFields(getNumber(), {
+                                hairColor: this.state.hairColor,
+                                eysColor:  this.state.eysColor,
+                                skinColor: this.state.skinColor,
+                                spriteName: this.state.currentSpriteName
+                            });
+
+                            Actions.GameComponent();
+                            clickAudioEffect();
+                        }}
                                            style={styles.agreeButton}> 
                             <Text style={{color: 'white', fontFamily: 'Montserrat-Medium', fontSize: 17}}>Создать</Text>
                         </TouchableOpacity>
