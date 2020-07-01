@@ -15,7 +15,7 @@ import { styles } from './styles';
 *
 */
 
-import { Auth } from 'aws-amplify';
+import AmazonCognitoAPI from "../../api/AmazonCognitoAPI";
 
 export default class StartMenu extends Component {
     state = {
@@ -24,10 +24,14 @@ export default class StartMenu extends Component {
         modalVisible: false,
         modalText: '',
       }
-    
+
     constructor(props: any) {
         super(props);
+
+        this._authController = new AmazonCognitoAPI();
     }
+
+    _authController: AmazonCognitoAPI;
 
     fieldsSuccessful = () : boolean => {
         return this.state.username.length !== 0 && this.state.password.length !== 0;
@@ -35,13 +39,6 @@ export default class StartMenu extends Component {
 
     onClickHandler = (viewId: String) => {
         alert('Button pressed ' + viewId);
-    }
-
-    SingIn = async () => {
-        await Auth.signIn(this.state.username, 
-                          this.state.password)
-            .then(()=>{console.log('singin Succses');  Actions.CharacterMenu()})
-            .catch(error=>{console.log('signin error', error); this.openWarningModal('Не правильно введен \n номер телефона или пароль!');});
     }
 
     openWarningModal = (message: string) => {
@@ -92,41 +89,47 @@ export default class StartMenu extends Component {
                                        
                                 value={this.state.username}
                                 onChangeText = { (phoneNumber: string) => {this.setState({username: phoneNumber.replace(/\s/g, '')})} } />
-                    </View>
+                </View>
 
-                    <View style = {styles.inputContainer}>
-                        <TextInput style                 = {styles.input}
-                                   placeholder           = "Пароль"
-                                   keyboardType          = "default"
-                                   secureTextEntry       = {true}
-                                   underlineColorAndroid = 'transparent'
+                <View style = {styles.inputContainer}>
+                    <TextInput style                 = {styles.input}
+                               placeholder           = "Пароль"
+                               keyboardType          = "default"
+                               secureTextEntry       = {true}
+                               underlineColorAndroid = 'transparent'
 
-                                   onChangeText = { (password) => this.setState({password}) } />
-                    </View>
-                
-                    <TouchableOpacity style   = {styles.logButton}
-                                      onPress = { () => {
-                                          clickAudioEffect();
-                                          if (!this.fieldsSuccessful()) {
-                                            this.openWarningModal('Поля входа \n не могут быть пустыми!');
-                                            return;
-                                          }
-                                        
-                                          this.setState({smsSended: true});
-                                          this.SingIn();
-                                      }}>
-                        <Text style = {styles.buttonsText}>Войти</Text>
-                    </TouchableOpacity>
-                    
-                    <Text style = {styles.agitText}>У вас еще нету аккаунта в нашей потрясающей аниме игре?????</Text>
+                               onChangeText = { (password) => this.setState({password}) } />
+                </View>
 
-                    <TouchableOpacity style   = {styles.regButton}
-                                      onPress = { () => {
-                                          clickAudioEffect();
-                                          Actions.SigIn();
-                                      } }>
-                        <Text style = {styles.buttonsText}>Зарегистрироваться</Text>
-                    </TouchableOpacity>
+                <TouchableOpacity style   = {styles.logButton}
+                                  onPress = { () => {
+                                      clickAudioEffect();
+                                      if (!this.fieldsSuccessful()) {
+                                        this.openWarningModal('Поля входа \n не могут быть пустыми!');
+                                        return;
+                                      }
+
+                                      this.setState({smsSended: true});
+
+                                      this._authController.setUserFields({
+                                          username: this.state.username,
+                                          password: this.state.password
+                                      });
+                                      this._authController.SingIn().then(() => Actions.CharacterConstructor())
+                                          .catch(() => this.openWarningModal('Ошибка соединения или \n некорректно введены данные!'));
+                                  }}>
+                    <Text style = {styles.buttonsText}>Войти</Text>
+                </TouchableOpacity>
+
+                <Text style = {styles.agitText}>У вас еще нету аккаунта в нашей потрясающей аниме игре?????</Text>
+
+                <TouchableOpacity style   = {styles.regButton}
+                                  onPress = { () => {
+                                      clickAudioEffect();
+                                      Actions.SigIn();
+                                  } }>
+                    <Text style = {styles.buttonsText}>Зарегистрироваться</Text>
+                </TouchableOpacity>
                     
                 <View style = {styles.donation}>
                     <TouchableOpacity style   = {styles.donatButton}

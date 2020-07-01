@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { Actions } from 'react-native-router-flux';
 import { TextInput, Text, View, TouchableOpacity,  Image, Modal} from 'react-native';
-import { Auth } from 'aws-amplify';
 
 import { TextInputMask } from 'react-native-masked-text';
 import { clickAudioEffect } from '../../endpoints/AudioEffects';
+
+import AmazonCognitoAPI from '../../api/AmazonCognitoAPI';
 
 import { styles } from './styles';
 
@@ -31,7 +32,11 @@ export default class RegistrationMenu extends Component {
 
     constructor(props: any) {
         super(props);
+
+        this._authController = new AmazonCognitoAPI();
     }
+
+    _authController: AmazonCognitoAPI;
 
     onClickHandler = (viewId: String) => {
         alert('Button pressed ' + viewId);
@@ -39,29 +44,6 @@ export default class RegistrationMenu extends Component {
 
     fieldsSuccessful = () : boolean => {
         return this.state.phone_number.length !== 0 && this.state.username.length !== 0 && this.state.password.length !== 0 && this.state.email.length !== 0;
-    }
-
-    signUp = async () =>  {
-        const username:any = this.state.username
-        const password:any = this.state.password
-        const email:any = this.state.email
-        const phone_number:any = this.state.phone_number
-        await Auth.signUp({
-            username,
-            password,
-            attributes:{
-                email,
-                phone_number
-            }
-        }).then(()=>console.log('signup successful'))
-          .catch(error=>{console.log('signup error', error); this.openWarningModal('Ошибка соединения или \n некорректно введены данные!');});
-    }
-
-    confirmSignUp = async() => {
-        await Auth.confirmSignUp(this.state.username, 
-                                 this.state.smsCode)
-            .then(()=>{console.log('successful confirm singtup'); Actions.CreateCharacter()})
-            .catch(error=>{console.log('error confirming signing up',error); this.openWarningModal('Ошибка соединения или \n неправильно введен \n код подтверждения!')});
     }
 
     openWarningModal = (message: string) => {
@@ -149,9 +131,22 @@ export default class RegistrationMenu extends Component {
                                                 this.openWarningModal('Поля регистрации \n не могут быть пустыми!');
                                                 return;
                                             } 
-                                            
+
                                             this.setState({smsSent: true});
-                                            this.signUp();
+
+                                            this._authController.setUserFields( {
+                                                phoneNumber: this.state.phone_number,
+                                                username: this.state.username,
+                                                password: this.state.password,
+                                                email: this.state.email,
+                                            });
+
+                                            this._authController.signUp().then(res => {
+                                                if (!res) {
+                                                    this.openWarningModal('Ошибка соединения или \n некорректно введены данные!');
+                                                    return;
+                                                }
+                                            }).catch(() => this.openWarningModal('Ошибка соединения или \n некорректно введены данные!'));
                                           }}>
                         <Text style = {styles.buttonsText}>Отправить код</Text>
                     </TouchableOpacity>
@@ -172,7 +167,15 @@ export default class RegistrationMenu extends Component {
                                           if (!this.state.smsSent) {
                                               return;
                                           }
-                                          this.confirmSignUp();
+
+                                          this._authController.confirmSignUp(this.state.smsCode).then(res => {
+                                              if (!res) {
+                                                  this.openWarningModal('Ошибка соединения или \n неправильно введен \n код подтверждения!');
+                                                  return;
+                                              }
+
+                                              Actions.CreateCharacter();
+                                          }).catch(() => this.openWarningModal('Ошибка соединения или \n неправильно введен \n код подтверждения!'));
                                       }}>
                         <Text style = {styles.buttonsText}>Подтвердить</Text>
                     </TouchableOpacity>

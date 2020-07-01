@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 
 import BackgroundAudioController from '../../endpoints/BackgroundAudioController';
 
-// View components.
+// Custom components.
 import MenuButton    from '../MenuBottom/MenuBottom';
 import HeroStatusBar from '../HeroStatusBar/HeroStatusBar';
 
