@@ -14,6 +14,7 @@ export default class Items {
         Salt:            { translation: 'Соль',       ref: require(Items._baseFolder + 'salt.png')      },
         Papper:          { translation: 'Перец',      ref: require(Items._baseFolder + 'papper.png')    },
         Milk:            { translation: 'Молоко',     ref: require(Items._baseFolder + 'milk.png')      },
+        Apple:           { translation: 'Яблоки',     ref: require(Items._baseFolder + 'apple.png')     },
 
         Grapes:          { translation: 'Виноград',   ref: require(Items._baseFolder + 'grapes.png')    },
         Yeast:           { translation: 'Дрожжи',     ref: require(Items._baseFolder + 'flour.png')     },
@@ -22,13 +23,41 @@ export default class Items {
     };
 
     static recipes = {
-        ApplePie:  { ingredients: {  }, translation: 'Яблочный пирог', chance: 0.14, },
-        Hamburger: { ingredients: {  }, translation: 'Гамбургер'     , chance: 0.14, },
-        Pizza:     { ingredients: {  }, translation: 'Пицца'         , chance: 0.14, },
-        Ramen:     { ingredients: {  }, translation: 'Рамэн'         , chance: 0.14, },
-        Omelete:   { ingredients: {  }, translation: 'Яишница'       , chance: 0.14, },
-        Casserole: { ingredients: {  }, translation: 'Запеканка'     , chance: 0.14, },
-        Hooch:     { ingredients: {  }, translation: 'Самогон'       , chance: 0.05, }
+        ApplePie:  { ingredients: [ 
+            Items.ingredients.Eggs, Items.ingredients.Oil, Items.ingredients.Flour, 
+            Items.ingredients.Milk, Items.ingredients.Apple], 
+            translation: 'Яблочный пирог', chance: 0.14, 
+        },
+        Hamburger: { ingredients: [ 
+            Items.ingredients.Salad, Items.ingredients.Tomatos, 
+            Items.ingredients.Flour, Items.ingredients.Milk
+         ], 
+            translation: 'Гамбургер', chance: 0.14, 
+        },
+        Pizza: { ingredients: [ 
+            Items.ingredients.Flour, Items.ingredients.Milk, Items.ingredients.Tomatos, 
+            Items.ingredients.Sausage, Items.ingredients.Olives
+         ], 
+            translation: 'Пицца', chance: 0.14, 
+        },
+        Omelete: { ingredients: [ 
+            Items.ingredients.Eggs, Items.ingredients.Milk, Items.ingredients.Tomatos,
+            Items.ingredients.Salt
+         ], 
+            translation: 'Яишница', chance: 0.14, 
+        },
+        Casserole: { ingredients: [ 
+            Items.ingredients.Eggs, Items.ingredients.Milk, 
+            Items.ingredients.Sugar
+         ], 
+            translation: 'Запеканка', chance: 0.14, 
+        },
+        Hooch: { ingredients: [ 
+            Items.ingredients.Grapes, Items.ingredients.Yeast, 
+            Items.ingredients.Sugar, Items.ingredients.Raspberry
+         ], 
+            translation: 'Самогон', chance: 0.05, 
+        }
     };
 
     static clothes = {
