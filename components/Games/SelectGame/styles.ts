@@ -1,6 +1,7 @@
 import { StyleSheet, Dimensions } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
+
 const colorSpectrum = {
     white: '#ffffff',
     pink:  '#FBC9FF',
@@ -19,6 +20,7 @@ export const styles = StyleSheet.create({
         flex: 0,
         alignItems: 'center',
         justifyContent: 'center',
+        position: 'absolute'
     },
 
 })
