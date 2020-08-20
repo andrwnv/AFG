@@ -14,10 +14,12 @@ import Darts                from './components/Games/Darts/Darts';
 import Tower                from './components/Games/Tower/Tower';
 import Maze                 from './components/Games/Maze/Maze';
 
+import {Test} from './components/Games/SelectGame/SelectGameConstructor';
+
 const Routes = () => (
    <Router>
       <Scene key = "root">
-         <Scene key = "LogIn"                component = {StartMenu}            hideNavBar = {true} title = "LogIn" initial = {true}/>
+         <Scene key = "LogIn"                component = {StartMenu}            hideNavBar = {true} title = "LogIn" />
          <Scene key = "SignIn"               component = {RegistrationMenu}     hideNavBar = {true} title = "SignIn" />
          <Scene key = "CharacterMenu"        component = {CharacterMenu}        hideNavBar = {true} title = "HeroMenu" />
          <Scene key = "CharacterConstructor" component = {CreateCharacter}      hideNavBar = {true} title = "Construct" />
@@ -29,6 +31,7 @@ const Routes = () => (
          <Scene key = "Headphones"           component = {Headphones}           hideNavBar = {true} title = "Headphones"/>
          <Scene key = "Tower"                component = {Tower}                hideNavBar = {true} title = "Tower" />
          <Scene key = "Maze"                 component = {Maze}                 hideNavBar = {true} title = "Maze" />
+         <Scene key = "Test"                 component = {Test}                 hideNavBar = {true} title = "Maze" initial = {true}/>
       </Scene>
    </Router>
 );

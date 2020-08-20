@@ -1,6 +1,7 @@
 import { StyleSheet, Dimensions } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
+
 const colorSpectrum = {
     white: '#ffffff',
     pink:  '#FBC9FF',
@@ -15,10 +16,27 @@ const colorSpectrum = {
 
 export const styles = StyleSheet.create({
     content: {
-        backgroundColor: colorSpectrum.white,
-        flex: 0,
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        // position: 'absolute'
+    },
+
+    selectorSquare: {
+        backgroundColor: colorSpectrum.lightPink,
+        borderRadius: 100,
+        width: '100%'
+    },
+
+    rowProps: {
+        flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
     },
 
+    textStyle: {
+        fontFamily: 'Montserrat-Medium', 
+        fontSize: 14, 
+        textAlign: 'center'
+    }
 })
