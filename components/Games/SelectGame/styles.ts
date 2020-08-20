@@ -16,16 +16,16 @@ const colorSpectrum = {
 
 export const styles = StyleSheet.create({
     content: {
-        backgroundColor: colorSpectrum.white,
-        flex: 0,
+        flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        position: 'absolute'
+        // position: 'absolute'
     },
 
     selectorSquare: {
         backgroundColor: colorSpectrum.lightPink,
-        borderRadius: 3,
+        borderRadius: 100,
+        width: '100%'
     },
 
     rowProps: {

@@ -21,12 +21,11 @@ class SelectGamesConstructor {
         for (let [, value] of Object.entries(items)) {
             for (let [, _value] of Object.entries(value)) {
                 _items.push(
-                    <View style={styles.rowProps}>
-                        <Image source={_value.ref} resizeMode={'center'}/>
-                        <Text>{_value.translation}</Text>
+                    <View style={[styles.rowProps, {flex: 1}]}>
+                            <Image source={_value.ref} style={{flex: 3, height: '10%'}}/>
+                            <Text style={[styles.content, {flex: 7, textAlign: 'center'}]}>{_value.translation}</Text>
                     </View>
-                    
-                );
+                    );
             }
         }
         
@@ -57,11 +56,15 @@ export class Test extends Component {
     render() {
         var a = new SelectGamesConstructor();
         return (
-            a.getGameComponent([
-                {items: Items.recipes.ApplePie.ingredients, isCorrect: true},
-                {items: Items.recipes.Hooch.ingredients, isCorrect: false},
-                {items: [Items.clothes.Panama, Items.clothes.TShirt], isCorrect: false},
-            ])
-        );
+            <View style={styles.content}>
+                {
+                    a.getGameComponent([
+                        {items: Items.recipes.ApplePie.ingredients, isCorrect: true},
+                        {items: Items.recipes.Hooch.ingredients, isCorrect: false},
+                        {items: [Items.clothes.Panama, Items.clothes.TShirt], isCorrect: false},
+                    ])
+                }
+            </View>
+        )
     }
 }
