@@ -23,4 +23,14 @@ export const styles = StyleSheet.create({
         position: 'absolute'
     },
 
+    selectorSquare: {
+        backgroundColor: colorSpectrum.lightPink,
+        borderRadius: 3,
+    },
+
+    rowProps: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+    }
 })
