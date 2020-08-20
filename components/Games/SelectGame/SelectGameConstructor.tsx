@@ -11,12 +11,11 @@ type RequiredParams = {
             ref: any;
         }[]
     ,
-    isCorrect: true
+    isCorrect: boolean
 };
 
 class SelectGamesConstructor {
-    getSelectorSquare(...items: Object[]): JSX.Element {
-        console.log('/////////////////////')
+    getSelectorSquare(isCorrect: boolean, ...items: Object[]): JSX.Element {
         let _items: JSX.Element[] = [];
         
         for (let [, value] of Object.entries(items)) {
@@ -32,7 +31,10 @@ class SelectGamesConstructor {
         }
         
         return (
-            <TouchableOpacity style={[styles.selectorSquare, styles.rowProps]}>
+            <TouchableOpacity style={[styles.selectorSquare, styles.rowProps]} onPress={() => {
+                if (isCorrect)
+                    console.log("Congratulation");
+            }}>
                 { _items }
             </TouchableOpacity>
         );
@@ -41,7 +43,7 @@ class SelectGamesConstructor {
     getGameComponent(items: RequiredParams[]) {
         let _items: JSX.Element[] = [];
 
-        items.forEach(item => _items.push(this.getSelectorSquare(item.items)));
+        items.forEach(item => _items.push(this.getSelectorSquare(item.isCorrect, item.items)));
 
         return ( 
             <View style = {[styles.content, {backgroundColor: 'red'}]}>
@@ -55,9 +57,10 @@ export class Test extends Component {
     render() {
         var a = new SelectGamesConstructor();
         return (
-            a.getGameComponent([{items: Items.recipes.ApplePie.ingredients, isCorrect: true},
-                {items: Items.recipes.Hooch.ingredients, isCorrect: true},
-                {items: [Items.clothes.Panama, Items.clothes.TShirt], isCorrect: true},
+            a.getGameComponent([
+                {items: Items.recipes.ApplePie.ingredients, isCorrect: true},
+                {items: Items.recipes.Hooch.ingredients, isCorrect: false},
+                {items: [Items.clothes.Panama, Items.clothes.TShirt], isCorrect: false},
             ])
         );
     }
