@@ -22,8 +22,8 @@ class SelectGamesConstructor {
             for (let [, _value] of Object.entries(value)) {
                 _items.push(
                     <View style={[styles.rowProps, {flex: 1}]}>
-                            <Image source={_value.ref} style={{flex: 3, height: '10%'}}/>
-                            <Text style={[styles.content, {flex: 7, textAlign: 'center'}]}>{_value.translation}</Text>
+                            <Image source={_value.ref} resizeMode={'contain'} style={{ flex:3, aspectRatio: 0.5}}/> {/* TODO: scale this*/}
+                            <Text style={[styles.content, {flex: 7}, styles.textStyle]}>{_value.translation}</Text>
                     </View>
                     );
             }

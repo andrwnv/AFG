@@ -32,5 +32,11 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
+    },
+
+    textStyle: {
+        fontFamily: 'Montserrat-Medium', 
+        fontSize: 14, 
+        textAlign: 'center'
     }
 })
