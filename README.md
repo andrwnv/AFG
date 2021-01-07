@@ -6,7 +6,7 @@ AFG is a home project that is being developed TypeScript + Reacr Native.
 
 AFG requires [Yarn](https://yarnpkg.com/) + [Expo](https://expo.io) to run.
 
-YARN:
+YARN (preferred):
 ```sh
 $ yarn install
 $ yarn start
