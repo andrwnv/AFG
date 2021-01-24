@@ -1,6 +1,6 @@
 # AFG [Anime Funny Game]
 
-<p align="center">
+<p align="left">
     <a href="#"><img src="https://img.shields.io/github/languages/code-size/codingandfitness/ReactNativeExpo.js" alt="GitHub code size in bytes"></a>
 </p>
 
