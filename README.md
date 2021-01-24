@@ -1,5 +1,10 @@
 # AFG [Anime Funny Game]
 
+<p align="center">
+    <a href="#"><img src="https://img.shields.io/github/languages/code-size/codingandfitness/ReactNativeExpo.js" alt="GitHub code size in bytes"></a>
+</p>
+
+
 AFG is a home project that is being developed TypeScript + Reacr Native.
 
 ### How to start
