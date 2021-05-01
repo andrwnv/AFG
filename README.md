@@ -11,3 +11,6 @@ YARN:
 $ yarn install
 $ yarn start
 ```
+
+### Design
+![alt text](https://github.com/andrwnv/AFG/blob/develop/image.png?raw=true)
